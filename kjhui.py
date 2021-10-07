@@ -46,7 +46,7 @@ selendx = StringVar()
 endxbox = ttk.Combobox(root, values = endxvals, textvariable=selendx, width=10,state="readonly")
 endxbox.place(relx=0.55,rely=0.9,anchor=CENTER)
 
-endylabel=Label(root,text="Color: ")
+endylabel=Label(root,text="End Y: ")
 endylabel.place(relx=0.41,rely=0.97,anchor=CENTER)
 
 endyvals = [400, 600, 200]
@@ -63,7 +63,62 @@ endybox.place(relx=0.55,rely=0.97,anchor=CENTER)
 
 canvas=Canvas(root, width=590, height=510, bg='white', highlightbackground="lightgray")
 
+keypress=""
+oldx= 0
+oldy= 0
+newx= 0
+newy= 0
 
+def circ(event):
+    global oldx
+    global newx
+    global oldy
+    global newy
+    oldx= srtxbox.get()
+    oldy= strybox.get()
+    newx= endxbox.get()
+    newy= endybox.get()
+    keypress="c"
+    draw(keypress,oldx,oldy,newx,newy)
+    
+def rect(event):
+    global oldx
+    global newx
+    global oldy
+    global newy
+    oldx= srtxbox.get()
+    oldy= strybox.get()
+    newx= endxbox.get()
+    newy= endybox.get()
+    keypress="r"
+    draw(keypress,oldx,oldy,newx,newy)
+    
+def line(event):
+    global oldx
+    global newx
+    global oldy
+    global newy
+    oldx= srtxbox.get()
+    oldy= strybox.get()
+    newx= endxbox.get()
+    newy= endybox.get()
+    keypress="l"
+    draw(keypress,oldx,oldy,newx,newy)
+    
+    
+
+def draw(keypress,oldx,oldy,newx,newy):
+    fill_color = colorbox.get()
+    if(keypress == "c"):
+        circle= canvas.create_oval(oldx,oldy,newx,newy, width = 10, fill=fill_color)
+    if(keypress == "r"):
+        recta = canvas.create_rectangle(oldx,oldy,newx,newy, width = 3, fill=fill_color)
+    if(keypress == "l"):
+        line = canvas.create_line(oldx,oldy,newx,newy, width = 3, fill=fill_color)
+    
+root.bind("<c>",circ)
+root.bind("<r>",rect)
+root.bind("<l>",line)
 
 
 canvas.pack()
